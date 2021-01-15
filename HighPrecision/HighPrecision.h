@@ -4,6 +4,18 @@ using namespace std;
 
 class HighPrecision
 {
+private:
+	// 默认数据位数
+	int DEFAULT_SIZE = 20;
+
+	// 数据指针
+	int* data = NULL;
+	// 符号位，负真正假
+	bool flag;
+
+	int size;
+	int length = 0;
+
 public:
 	// 构造函数，使用默认位数构建
 	HighPrecision();
@@ -19,13 +31,10 @@ public:
 	// 加法，传入另一个加数
 	HighPrecision add(HighPrecision& other);
 
-private:
-	// 默认数据位数
-	int DEFAULT_SIZE = 20;
+	// TODO 扩容数据
 
-	int* data = NULL;
-	int max_length;
-	int length;
+private:
+	void reverse();
 
 };
 
