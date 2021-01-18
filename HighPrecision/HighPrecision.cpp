@@ -16,6 +16,11 @@ HighPrecision::HighPrecision(int size)
 	this->size = size;
 }
 
+HighPrecision::~HighPrecision()
+{
+	delete[] this->data;
+}
+
 int countNum(int n)
 {
 	int tmp = 0;
@@ -28,13 +33,13 @@ int countNum(int n)
 	return tmp;
 }
 
-const HighPrecision HighPrecision::constNum(int num) const
+static HighPrecision constNum(const int num)
 {
 	int count = countNum(num);
 	HighPrecision result(count);
 	int n = 0;
 	for (int i = num; i; i /= 10) {
-		result.data[n] = i % 10;
+		result.getData()[n] = i % 10;
 		n++;
 	}
 	result.reverse();
@@ -43,14 +48,14 @@ const HighPrecision HighPrecision::constNum(int num) const
 
 // 从输入流中获取数据
 // 时间复杂度：O(n)
-void HighPrecision::get()
+void HighPrecision::get(istream& os)
 {
 	// 数组尾指针
 	int* p = this->data;
 	this->length = 0;
 
 	// 判断符号
-	*p = getchar();
+	*p = os.get();
 	if (*p == '-') {
 		// 如果是负号，符号位置为真
 		this->flag = true;
@@ -68,7 +73,7 @@ void HighPrecision::get()
 		// 读入数据
 		while (this->length < this->size) {
 			// 存入数据
-			*p = getchar();
+			*p = os.get();
 			// 判断停止条件
 			if (*p == '\n' || *p == '\0' || *p == EOF) {
 				// 反向存储数组
@@ -106,13 +111,13 @@ void HighPrecision::reverse()
 }
 
 // 输出
-void HighPrecision::display() const
+void HighPrecision::display(ostream& os)
 {
 	// 如果有符号，先输出符号
-	if (this->flag) cout << '-';
+	if (this->flag) os << '-';
 	// 反向输出
 	for (int* p = this->data + this->length - 1; p >= this->data; p--) {
-		cout << *p;
+		os << *p;
 	}
 }
 
@@ -182,20 +187,32 @@ HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 	return result;
 }
 
-HighPrecision HighPrecision::operator+(int other) const
-{
-	return *this + this->constNum(other);
-}
+//HighPrecision HighPrecision::operator+(int other) const
+//{
+//	HighPrecision result = constNum(other);
+//	return result + *this;
+//}
 
-HighPrecision& operator<<(int num, const HighPrecision& other)
-{
-	return other.constNum(num) + other;
-}
+//HighPrecision operator+(int num, HighPrecision& other)
+//{
+//	return(constNum(num) + other);
+//}
 
 // 输出运算符重载
 ostream& operator<<(ostream& os, const HighPrecision& other)
 {
-	other.display();
+	// 如果有符号，先输出符号
+	if (other.flag) os << '-';
+	// 反向输出
+	for (int* p = other.data + other.length - 1; p >= other.data; p--) {
+		os << *p;
+	}
+	return os;
+}
+
+istream& operator>>(istream& os, HighPrecision& other)
+{
+	other.get(os);
 	return os;
 }
 

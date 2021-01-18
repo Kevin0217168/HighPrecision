@@ -25,29 +25,37 @@ public:
 	// 传入数据位数
 	HighPrecision(int);
 	// 传入常量初始化
-	const HighPrecision constNum(int) const;
+	//static HighPrecision constNum(const int);
+
+	~HighPrecision();
 
 	// 从输入流中获取数据
-	void get();
-
+	void get(istream& os);
+	// 反转数据
+	void reverse();
 	// 输出数据
-	void display() const;
-
+	void display(ostream& os);
 	// 扩容数据
 	int resize(int size);
 
+
 	// 加法，传入另一个加数
 	HighPrecision operator+(const HighPrecision& other) const;
-	// 加法重载，加上一个常数
-	HighPrecision operator+(int) const;
-	// 加法重载
-	friend HighPrecision& operator<<(int, const HighPrecision& other);
+	/*HighPrecision operator+(int) const;
+	friend HighPrecision operator+(int, HighPrecision& other);*/
+
 
 	// 输出
 	friend ostream& operator<<(ostream& os, const HighPrecision& other);
+	// 输入
+	friend istream& operator>>(istream& os, HighPrecision& other);
+
+	int* getData() {
+		return data;
+	}
 
 private:
-	void reverse();
+	
 
 
 
