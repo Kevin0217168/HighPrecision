@@ -10,10 +10,7 @@ int main(void) {
 	HighPrecision a, b;
 	cin >> a >> b;
 
-	cout << a << "\n" << b << endl;
-	HighPrecision c = a + b;
-	cout << c << endl;
-	cout << a + b << endl;
+	cout << 2 + a + b << endl;
 
 	return 0;
 }

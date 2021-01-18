@@ -4,35 +4,7 @@
 
 using namespace std;
 
-HighPrecision::HighPrecision()
-{
-	this->data = new int[this->DEFAULT_SIZE];
-	this->size = this->DEFAULT_SIZE;
-}
-
-HighPrecision::HighPrecision(int size)
-{
-	this->data = new int[size];
-	this->size = size;
-}
-
-HighPrecision::~HighPrecision()
-{
-	cout << "awsl" << endl;
-	delete[] this->data;
-}
-
-HighPrecision::HighPrecision(const HighPrecision& other)
-{
-	cout << "aaa" << endl;
-	delete[] this->data;
-	this->data = new int[other.length];
-	memcpy(this->data, other.data, sizeof(int) * other.length);
-
-	this->length = other.length;
-	this->size = other.size;
-	this->flag = other.flag;
-}
+HighPrecision::HighPrecision(){}
 
 int countNum(int n)
 {
@@ -46,23 +18,44 @@ int countNum(int n)
 	return tmp;
 }
 
-static HighPrecision constNum(const int num)
+HighPrecision::HighPrecision(int num)
 {
+	// 数一数数据有几位
 	int count = countNum(num);
-	HighPrecision result(count);
+	// 设置一个相同大小的空间
+	this->resize(count);
+	// 将数据的每一位填入
 	int n = 0;
 	for (int i = num; i; i /= 10) {
-		result.getData()[n] = i % 10;
+		this->data[n] = i % 10;
 		n++;
 	}
-	result.reverse();
-	return result;
+	this->length = count;
+	// 将自己反转
+	this->reverse();
+}
+
+HighPrecision::HighPrecision(const HighPrecision& other)
+{
+	// 直接使用了重载运算符'='
+	*this = other;
+}
+
+HighPrecision::~HighPrecision()
+{
+	cout << "awsl" << endl;
+	delete[] this->data;
 }
 
 // 从输入流中获取数据
 // 时间复杂度：O(n)
 void HighPrecision::get(istream& os)
 {
+	// 如果数组为空，则自动新建
+	if (this->data == NULL) {
+		this->resize(this->DEFAULT_SIZE);
+	}
+
 	// 数组尾指针
 	int* p = this->data;
 	this->length = 0;
@@ -100,6 +93,7 @@ void HighPrecision::get(istream& os)
 			// 指针前移一位
 			p++;
 		}
+		// 数组扩容
 		resize(this->size + this->DEFAULTSTEP);
 		// 重置指针位置
 		p = this->data + this->length;
@@ -134,17 +128,25 @@ void HighPrecision::display()
 	}
 }
 
+// 赋值运算符重载
 HighPrecision& HighPrecision::operator=(const HighPrecision& other)
 {
+	// 如果要复制的是自身，则忽略操作
 	if (this == &other) return *this;
-	cout << "haha" << endl;
+	// 销毁原数据
 	delete[] this->data;
+	// 新建一块与新数据一样大的储存空间
 	this->data = new int[other.length];
+	// 批量移动数据
 	memcpy(this->data, other.data, sizeof(int) * other.length);
 
+	// 属性复制
 	this->length = other.length;
 	this->size = other.size;
 	this->flag = other.flag;
+	this->DEFAULTSTEP = other.DEFAULT_SIZE;
+
+	// 返回当前引用，方便连续赋值
 	return *this;
 }
 
@@ -171,7 +173,8 @@ HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 	}
 
 	// 初始化一个长度为最长数+1的对象，存放结果
-	HighPrecision result(A->length + 1);
+	HighPrecision result;
+	result.resize(A->length + 1);
 
 	// 同号，符号选择与其相同的符号
 	result.flag = this->flag && other.flag;
@@ -215,16 +218,9 @@ HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 	return result;
 }
 
-//HighPrecision HighPrecision::operator+(int other) const
-//{
-//	HighPrecision result = constNum(other);
-//	return result + *this;
-//}
-
-//HighPrecision operator+(int num, HighPrecision& other)
-//{
-//	return(constNum(num) + other);
-//}
+HighPrecision operator+(int num, const HighPrecision& other) {
+	return other + num;
+}
 
 // 输出运算符重载
 ostream& operator<<(ostream& os, const HighPrecision& other)
@@ -248,6 +244,7 @@ istream& operator>>(istream& os, HighPrecision& other)
 int HighPrecision::resize(int size)
 {
 	if (size <= this->length) {
+		cerr << "重新设置的数组大小无意义!" << endl;
 		return -1;
 	}
 

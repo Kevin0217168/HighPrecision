@@ -22,15 +22,18 @@ private:
 public:
 	// 构造函数，使用默认位数构建
 	HighPrecision();
-	// 传入数据位数
-	HighPrecision(int);
+
 	// 拷贝构造函数（对于需要深拷贝的对象必须要有！！！）
 	// 当函数返回局部对象的时候，会自动调用此函数进行拷贝副本
 	// 如果没有，将会自动拷贝地址，而不是地址指向的数据(浅拷贝)
 	HighPrecision(const HighPrecision&);
+	// 类型转换函数，将int转为高精度
+	HighPrecision(int);
+
 	// 传入常量初始化
 	//static HighPrecision constNum(const int);
 
+	// 析构函数，释放空间
 	~HighPrecision();
 
 	// 从输入流中获取数据
@@ -48,19 +51,12 @@ public:
 
 	// 加法，传入另一个加数
 	HighPrecision operator+(const HighPrecision& other) const;
-	/*HighPrecision operator+(int) const;
-	friend HighPrecision operator+(int, HighPrecision& other);*/
-
+	friend HighPrecision operator+(int, const HighPrecision& other);
 
 	// 输出
 	friend ostream& operator<<(ostream& os, const HighPrecision& other);
 	// 输入
 	friend istream& operator>>(istream& os, HighPrecision& other);
-
-	int* getData() {
-		return data;
-	}
-
 private:
 	
 
