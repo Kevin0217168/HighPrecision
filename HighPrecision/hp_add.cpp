@@ -1,21 +1,20 @@
-#include "HighPrecision.h"
+ï»¿#include "HighPrecision.h"
 #include <iostream>
-#include<cstring>
 
 using namespace std;
 
-// ¼Ó·¨
+// åŠ æ³•
 HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 {
-	// ÅÐ¶Ï·ûºÅ
+	// åˆ¤æ–­ç¬¦å·
 
-	// ÊÇ·ñÒìºÅ
-	// ¼ÓÉÏÒ»¸ö¸ºÊýµÈÓÚ¼õÈ¥ÕýÊý
+	// æ˜¯å¦å¼‚å·
+	// åŠ ä¸Šä¸€ä¸ªè´Ÿæ•°ç­‰äºŽå‡åŽ»æ­£æ•°
 	//if (this->flag == false && other.flag == true) return *this - other;
-	// Ïà·´
+	// ç›¸å
 	//else if (this->flag == true && other.flag == false) return other - *this;
 
-	// ½«³¤¶È½Ï³¤µÄ×÷ÎªA
+	// å°†é•¿åº¦è¾ƒé•¿çš„ä½œä¸ºA
 	const HighPrecision* A, * B;
 	if (this->length > other.length) {
 		A = this;
@@ -26,33 +25,33 @@ HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 		B = this;
 	}
 
-	// ³õÊ¼»¯Ò»¸ö³¤¶ÈÎª×î³¤Êý+1µÄ¶ÔÏó£¬´æ·Å½á¹û
+	// åˆå§‹åŒ–ä¸€ä¸ªé•¿åº¦ä¸ºæœ€é•¿æ•°+1çš„å¯¹è±¡ï¼Œå­˜æ”¾ç»“æžœ
 	HighPrecision result;
 	result.resize(A->length + 1);
 
-	// Í¬ºÅ£¬·ûºÅÑ¡ÔñÓëÆäÏàÍ¬µÄ·ûºÅ
+	// åŒå·ï¼Œç¬¦å·é€‰æ‹©ä¸Žå…¶ç›¸åŒçš„ç¬¦å·
 	result.flag = this->flag && other.flag;
 
 	int carry = 0;
 	for (int i = 0; i < A->length; i++) {
-		// Á½Êý¶¼ÔÚ·¶Î§ÄÚ
+		// ä¸¤æ•°éƒ½åœ¨èŒƒå›´å†…
 		if (i < B->length) {
-			// Á½ÊýÏà¼Ó£¬²¢¼ÓÉÏÉÏÒ»ÊýµÄ½øÎ»
+			// ä¸¤æ•°ç›¸åŠ ï¼Œå¹¶åŠ ä¸Šä¸Šä¸€æ•°çš„è¿›ä½
 			result.data[i] = A->data[i] + B->data[i] + carry;
-			// ÅÐ¶ÏÊÇ·ñÐèÒª½øÎ»
+			// åˆ¤æ–­æ˜¯å¦éœ€è¦è¿›ä½
 			if (result.data[i] > 9) {
 				carry = 1;
-				// ·ÅÈë½á¹û¸öÎ»Êý
+				// æ”¾å…¥ç»“æžœä¸ªä½æ•°
 				result.data[i] %= 10;
 			}
 			else {
 				carry = 0;
 			}
 		}
-		// ½ÏÐ¡ÊýÒÑ¼ÓÍê£¬Ö»¼Ó½Ï´óÊý
+		// è¾ƒå°æ•°å·²åŠ å®Œï¼ŒåªåŠ è¾ƒå¤§æ•°
 		else {
 			result.data[i] = A->data[i] + carry;
-			// µ±×îÐ¡Êý¼ÓÍêºó¿ÉÄÜ³öÏÖ½øÎ»£¬µ¥Î»×î´ó9£¬ ¼ÓÉÏ½øÎ»×î¶à10
+			// å½“æœ€å°æ•°åŠ å®ŒåŽå¯èƒ½å‡ºçŽ°è¿›ä½ï¼Œå•ä½æœ€å¤§9ï¼Œ åŠ ä¸Šè¿›ä½æœ€å¤š10
 			if (i == B->length) {
 				if (result.data[i] > 9) {
 					result.data[i] = 0;
@@ -62,11 +61,11 @@ HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 				}
 			}
 		}
-		
+
 	}
-	// ½«½øÎ»¼Óµ½×î¸ßÎ»£¬´Ë´¦×î¸ßÎ»Ö»ÄÜÊÇ0»ò1
+	// å°†è¿›ä½åŠ åˆ°æœ€é«˜ä½ï¼Œæ­¤å¤„æœ€é«˜ä½åªèƒ½æ˜¯0æˆ–1
 	result.data[A->length] = carry;
-	// ¼ÆËã½á¹ûÓÐÐ§Î»Êý£¬¼ÓÉÏÊÇ·ñ½øÎ»µÄ±êÖ¾
+	// è®¡ç®—ç»“æžœæœ‰æ•ˆä½æ•°ï¼ŒåŠ ä¸Šæ˜¯å¦è¿›ä½çš„æ ‡å¿—
 	result.length = A->length + carry;
 
 	return result;

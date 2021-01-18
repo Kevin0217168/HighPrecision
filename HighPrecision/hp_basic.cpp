@@ -31,8 +31,10 @@ HighPrecision::HighPrecision(int num)
 		n++;
 	}
 	this->length = count;
+	if (num < 0) this->flag = true;
+	else this->flag = false;
 	// 将自己反转
-	this->reverse();
+	//this->reverse();
 }
 
 HighPrecision::HighPrecision(const HighPrecision& other)
@@ -102,7 +104,7 @@ void HighPrecision::get(istream& os)
 			// 存入数据
 			*p = os.get();
 			// 判断停止条件
-			if (*p == '\n' || *p == '\0' || *p == EOF) {
+			if (*p == '\n' || *p == '\0' || *p == EOF || *p == ' ') {
 				// 反向存储数组
 				this->reverse();
 				return;
@@ -165,6 +167,34 @@ int HighPrecision::resize(int size)
 	this->size = size;
 
 	return 0;
+}
+
+// 比较数据的绝对值，返回绝对值较大数的引用
+const HighPrecision& HighPrecision::absMax(const HighPrecision& A, const HighPrecision& B) const
+{
+	if (A.length > B.length) {
+		return A;
+	}
+	else if (B.length > A.length) {
+		return B;
+	}
+	else {
+		for (int i = A.length - 1; i >= 0; i--) {
+			if (A.data[i] > B.data[i]) {
+				return A;
+			}
+			else if (A.data[i] < B.data[i]) {
+				return B;
+			}
+		}
+	}
+	return A;
+}
+
+// 比较数据，返回较大数的引用
+HighPrecision HighPrecision::compare(HighPrecision& A, HighPrecision& B)
+{
+	return HighPrecision();
 }
 
 // 输出运算符重载

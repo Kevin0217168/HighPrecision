@@ -15,7 +15,7 @@ private:
 	// 数据指针
 	int* data = NULL;
 	// 符号位，负真正假
-	bool flag;
+	bool flag = false;
 
 	int size;
 	int length = 0;
@@ -49,6 +49,11 @@ public:
 	// 扩容数据
 	int resize(int size);
 
+	// 比较数据的绝对值，返回绝对值较大数的引用
+	HighPrecision compare(HighPrecision& A, HighPrecision& B);
+	// 比较数据，返回较大数的引用
+	const HighPrecision& absMax(const HighPrecision& A, const HighPrecision& B) const;
+
 	// 输入
 	friend istream& operator>>(istream& os, HighPrecision& other);
 	// 输出
@@ -70,6 +75,17 @@ public:
 	HighPrecision operator+(const HighPrecision& other) const;
 	// 整型加高精度
 	friend HighPrecision operator+(int, const HighPrecision& other);
+
+	/*------------------实现在 hp_sub.cpp 中---------------------*/
+
+	// 高精度减高精度
+	HighPrecision operator-(const HighPrecision& other) const;
+
+	/*------------------实现在 hp_compare.cpp 中---------------------*/
+	// 高精度等于高精度
+	bool operator==(const HighPrecision& other) const;
+	// 高精度小于等于高精度
+	bool operator<=(const HighPrecision& other) const;
 
 private:
 
