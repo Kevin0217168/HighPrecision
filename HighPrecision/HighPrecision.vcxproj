@@ -151,7 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HighPrecision.cpp" />
+    <ClCompile Include="hp_add.cpp" />
+    <ClCompile Include="hp_basic.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

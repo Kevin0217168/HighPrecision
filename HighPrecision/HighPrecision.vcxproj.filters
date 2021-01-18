@@ -18,7 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="HighPrecision.cpp">
+    <ClCompile Include="hp_basic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="hp_add.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
