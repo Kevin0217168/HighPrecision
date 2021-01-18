@@ -1,67 +1,76 @@
-#include <cstddef>
+ï»¿#include <cstddef>
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
 class HighPrecision
 {
 private:
-	// Ä¬ÈÏÊý¾ÝÎ»Êý
+	// é»˜è®¤æ•°æ®ä½æ•°
 	int DEFAULT_SIZE = 20;
-	// Ä¬ÈÏÀ©ÈÝÁ¿
+	// é»˜è®¤æ‰©å®¹é‡
 	int DEFAULTSTEP = 10;
 
-	// Êý¾ÝÖ¸Õë
+	// æ•°æ®æŒ‡é’ˆ
 	int* data = NULL;
-	// ·ûºÅÎ»£¬¸ºÕæÕý¼Ù
+	// ç¬¦å·ä½ï¼Œè´ŸçœŸæ­£å‡
 	bool flag;
 
 	int size;
 	int length = 0;
 
 public:
-	/*------------------ÊµÏÖÔÚ hp_basic.cpp ÖÐ---------------------*/
+	/*------------------å®žçŽ°åœ¨ hp_basic.cpp ä¸­---------------------*/
 
-	// Ä¬ÈÏ¹¹Ôìº¯Êý
+	// é»˜è®¤æž„é€ å‡½æ•°
 	HighPrecision();
 
-	// ¿½±´¹¹Ôìº¯Êý£¨¶ÔÓÚÐèÒªÉî¿½±´µÄ¶ÔÏó±ØÐëÒªÓÐ£¡£¡£¡£©
-	// µ±º¯Êý·µ»Ø¾Ö²¿¶ÔÏóµÄÊ±ºò£¬»á×Ô¶¯µ÷ÓÃ´Ëº¯Êý½øÐÐ¿½±´¸±±¾
-	// Èç¹ûÃ»ÓÐ£¬½«»á×Ô¶¯¿½±´µØÖ·£¬¶ø²»ÊÇµØÖ·Ö¸ÏòµÄÊý¾Ý(Ç³¿½±´)
+	// æ‹·è´æž„é€ å‡½æ•°ï¼ˆå¯¹äºŽéœ€è¦æ·±æ‹·è´çš„å¯¹è±¡å¿…é¡»è¦æœ‰ï¼ï¼ï¼ï¼‰
+	// å½“å‡½æ•°è¿”å›žå±€éƒ¨å¯¹è±¡çš„æ—¶å€™ï¼Œä¼šè‡ªåŠ¨è°ƒç”¨æ­¤å‡½æ•°è¿›è¡Œæ‹·è´å‰¯æœ¬
+	// å¦‚æžœæ²¡æœ‰ï¼Œå°†ä¼šè‡ªåŠ¨æ‹·è´åœ°å€ï¼Œè€Œä¸æ˜¯åœ°å€æŒ‡å‘çš„æ•°æ®(æµ…æ‹·è´)
 	HighPrecision(const HighPrecision&);
-	// ¸³ÖµÔËËã·û
-	// µ±±äÁ¿¸³ÖµÊ±×Ô¶¯µ÷ÓÃ£¬½øÐÐÉî¿½±´£¡£¡£¡
+	// èµ‹å€¼è¿ç®—ç¬¦
+	// å½“å˜é‡èµ‹å€¼æ—¶è‡ªåŠ¨è°ƒç”¨ï¼Œè¿›è¡Œæ·±æ‹·è´ï¼ï¼ï¼
 	HighPrecision& operator=(const HighPrecision& other);
 
-	// ÀàÐÍ×ª»»º¯Êý£¬½«int×ªÎª¸ß¾«¶È
+	// ç±»åž‹è½¬æ¢å‡½æ•°ï¼Œå°†intè½¬ä¸ºé«˜ç²¾åº¦
 	HighPrecision(int);
 
-	// Îö¹¹º¯Êý£¬ÊÍ·Å¿Õ¼ä
+	// æžæž„å‡½æ•°ï¼Œé‡Šæ”¾ç©ºé—´
 	~HighPrecision();
 
-	// ´ÓÊäÈëÁ÷ÖÐ»ñÈ¡Êý¾Ý
+	// ä»Žè¾“å…¥æµä¸­èŽ·å–æ•°æ®
 	void get(istream& os);
-	// ·´×ªÊý¾Ý
+	// åè½¬æ•°æ®
 	void reverse();
-	// Êä³öÊý¾Ý
+	// è¾“å‡ºæ•°æ®
 	void display();
-	// À©ÈÝÊý¾Ý
+	// æ‰©å®¹æ•°æ®
 	int resize(int size);
 
-	// ÊäÈë
+	// è¾“å…¥
 	friend istream& operator>>(istream& os, HighPrecision& other);
-	// Êä³ö
+	// è¾“å‡º
 	friend ostream& operator<<(ostream& os, const HighPrecision& other);
-	
 
-	/*------------------ÊµÏÖÔÚ hp_add.cpp ÖÐ---------------------*/
+	// è½¬æ¢ä¸ºintç±»åž‹
+	operator int() {
+		cout << "è°ƒç”¨æˆ‘å•¦" << endl;
+		int sum = 0;
+		for (int i = this->length - 1; i >= 0; i--) {
+			sum += this->data[i] * pow(10, (this->length - i - 1));
+		}
+		return sum;
+	}
 
-	// ¸ß¾«¶È¼Ó¸ß¾«¶È
+	/*------------------å®žçŽ°åœ¨ hp_add.cpp ä¸­---------------------*/
+
+	// é«˜ç²¾åº¦åŠ é«˜ç²¾åº¦
 	HighPrecision operator+(const HighPrecision& other) const;
-	// ÕûÐÍ¼Ó¸ß¾«¶È
+	// æ•´åž‹åŠ é«˜ç²¾åº¦
 	friend HighPrecision operator+(int, const HighPrecision& other);
 
 private:
-	
-};
 
+};

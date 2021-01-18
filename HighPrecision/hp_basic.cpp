@@ -1,4 +1,4 @@
-#include "HighPrecision.h"
+ï»¿#include "HighPrecision.h"
 #include <iostream>
 #include<cstring>
 
@@ -20,110 +20,109 @@ int countNum(int n)
 
 HighPrecision::HighPrecision(int num)
 {
-	// ÊıÒ»ÊıÊı¾İÓĞ¼¸Î»
+	// æ•°ä¸€æ•°æ•°æ®æœ‰å‡ ä½
 	int count = countNum(num);
-	// ÉèÖÃÒ»¸öÏàÍ¬´óĞ¡µÄ¿Õ¼ä
+	// è®¾ç½®ä¸€ä¸ªç›¸åŒå¤§å°çš„ç©ºé—´
 	this->resize(count);
-	// ½«Êı¾İµÄÃ¿Ò»Î»ÌîÈë
+	// å°†æ•°æ®çš„æ¯ä¸€ä½å¡«å…¥
 	int n = 0;
 	for (int i = num; i; i /= 10) {
 		this->data[n] = i % 10;
 		n++;
 	}
 	this->length = count;
-	// ½«×Ô¼º·´×ª
+	// å°†è‡ªå·±åè½¬
 	this->reverse();
 }
 
 HighPrecision::HighPrecision(const HighPrecision& other)
 {
-	// Ö±½ÓÊ¹ÓÃÁËÖØÔØÔËËã·û'='
+	// ç›´æ¥ä½¿ç”¨äº†é‡è½½è¿ç®—ç¬¦'='
 	*this = other;
 }
 
-// ¸³ÖµÔËËã·ûÖØÔØ
+// èµ‹å€¼è¿ç®—ç¬¦é‡è½½
 HighPrecision& HighPrecision::operator=(const HighPrecision& other)
 {
-	// Èç¹ûÒª¸´ÖÆµÄÊÇ×ÔÉí£¬ÔòºöÂÔ²Ù×÷
+	// å¦‚æœè¦å¤åˆ¶çš„æ˜¯è‡ªèº«ï¼Œåˆ™å¿½ç•¥æ“ä½œ
 	if (this == &other) return *this;
-	// Ïú»ÙÔ­Êı¾İ
+	// é”€æ¯åŸæ•°æ®
 	delete[] this->data;
-	// ĞÂ½¨Ò»¿éÓëĞÂÊı¾İÒ»Ñù´óµÄ´¢´æ¿Õ¼ä
+	// æ–°å»ºä¸€å—ä¸æ–°æ•°æ®ä¸€æ ·å¤§çš„å‚¨å­˜ç©ºé—´
 	this->data = new int[other.length];
-	// ÅúÁ¿ÒÆ¶¯Êı¾İ
+	// æ‰¹é‡ç§»åŠ¨æ•°æ®
 	memcpy(this->data, other.data, sizeof(int) * other.length);
 
-	// ÊôĞÔ¸´ÖÆ
+	// å±æ€§å¤åˆ¶
 	this->length = other.length;
 	this->size = other.size;
 	this->flag = other.flag;
 	this->DEFAULTSTEP = other.DEFAULT_SIZE;
 
-	// ·µ»Øµ±Ç°ÒıÓÃ£¬·½±ãÁ¬Ğø¸³Öµ
+	// è¿”å›å½“å‰å¼•ç”¨ï¼Œæ–¹ä¾¿è¿ç»­èµ‹å€¼
 	return *this;
 }
 
 HighPrecision::~HighPrecision()
 {
-	cout << "awsl" << endl;
 	delete[] this->data;
 }
 
-// ´ÓÊäÈëÁ÷ÖĞ»ñÈ¡Êı¾İ
-// Ê±¼ä¸´ÔÓ¶È£ºO(n)
+// ä»è¾“å…¥æµä¸­è·å–æ•°æ®
+// æ—¶é—´å¤æ‚åº¦ï¼šO(n)
 void HighPrecision::get(istream& os)
 {
-	// Èç¹ûÊı×éÎª¿Õ£¬Ôò×Ô¶¯ĞÂ½¨
+	// å¦‚æœæ•°ç»„ä¸ºç©ºï¼Œåˆ™è‡ªåŠ¨æ–°å»º
 	if (this->data == NULL) {
 		this->resize(this->DEFAULT_SIZE);
 	}
 
-	// Êı×éÎ²Ö¸Õë
+	// æ•°ç»„å°¾æŒ‡é’ˆ
 	int* p = this->data;
 	this->length = 0;
 
-	// ÅĞ¶Ï·ûºÅ
+	// åˆ¤æ–­ç¬¦å·
 	*p = os.get();
 	if (*p == '-') {
-		// Èç¹ûÊÇ¸ººÅ£¬·ûºÅÎ»ÖÃÎªÕæ
+		// å¦‚æœæ˜¯è´Ÿå·ï¼Œç¬¦å·ä½ç½®ä¸ºçœŸ
 		this->flag = true;
 	}
 	else {
 		this->flag = false;
-		// Èç¹ûÊÇÊı¾İ£¬×ª»»ÎªÊı×Ö
+		// å¦‚æœæ˜¯æ•°æ®ï¼Œè½¬æ¢ä¸ºæ•°å­—
 		*p -= '0';
 		p++;
 		this->length++;
 	}
 
-	// TODO Î´ÅĞ¶ÏÊı¾İ<=1µÄÇé¿ö
+	// TODO æœªåˆ¤æ–­æ•°æ®<=1çš„æƒ…å†µ
 	while (1) {
-		// ¶ÁÈëÊı¾İ
+		// è¯»å…¥æ•°æ®
 		while (this->length < this->size) {
-			// ´æÈëÊı¾İ
+			// å­˜å…¥æ•°æ®
 			*p = os.get();
-			// ÅĞ¶ÏÍ£Ö¹Ìõ¼ş
+			// åˆ¤æ–­åœæ­¢æ¡ä»¶
 			if (*p == '\n' || *p == '\0' || *p == EOF) {
-				// ·´Ïò´æ´¢Êı×é
+				// åå‘å­˜å‚¨æ•°ç»„
 				this->reverse();
 				return;
 			};
-			// ×Ö·û×ªÊı×Ö
+			// å­—ç¬¦è½¬æ•°å­—
 			*p -= '0';
-			// ÓĞĞ§Êı¾İ+1
+			// æœ‰æ•ˆæ•°æ®+1
 			this->length++;
-			// Ö¸ÕëÇ°ÒÆÒ»Î»
+			// æŒ‡é’ˆå‰ç§»ä¸€ä½
 			p++;
 		}
-		// Êı×éÀ©Èİ
+		// æ•°ç»„æ‰©å®¹
 		resize(this->size + this->DEFAULTSTEP);
-		// ÖØÖÃÖ¸ÕëÎ»ÖÃ
+		// é‡ç½®æŒ‡é’ˆä½ç½®
 		p = this->data + this->length;
 	}
 }
 
-// Ë«Ö¸Õë·´×ªÊı¾İ
-// Ê±¼ä¸´ÔÓ¶È£ºO(n/2)
+// åŒæŒ‡é’ˆåè½¬æ•°æ®
+// æ—¶é—´å¤æ‚åº¦ï¼šO(n/2)
 void HighPrecision::reverse()
 {
 
@@ -139,22 +138,22 @@ void HighPrecision::reverse()
 	}
 }
 
-// Êä³ö
+// è¾“å‡º
 void HighPrecision::display()
 {
-	// Èç¹ûÓĞ·ûºÅ£¬ÏÈÊä³ö·ûºÅ
+	// å¦‚æœæœ‰ç¬¦å·ï¼Œå…ˆè¾“å‡ºç¬¦å·
 	if (this->flag) cout << '-';
-	// ·´ÏòÊä³ö
+	// åå‘è¾“å‡º
 	for (int* p = this->data + this->length - 1; p >= this->data; p--) {
 		cout << *p;
 	}
 }
 
-// ÖØĞÂ·ÖÅäÄÚ´æ
+// é‡æ–°åˆ†é…å†…å­˜
 int HighPrecision::resize(int size)
 {
 	if (size <= this->length) {
-		cerr << "ÖØĞÂÉèÖÃµÄÊı×é´óĞ¡ÎŞÒâÒå!" << endl;
+		cerr << "é‡æ–°è®¾ç½®çš„æ•°ç»„å¤§å°æ— æ„ä¹‰!" << endl;
 		return -1;
 	}
 
@@ -168,19 +167,19 @@ int HighPrecision::resize(int size)
 	return 0;
 }
 
-// Êä³öÔËËã·ûÖØÔØ
+// è¾“å‡ºè¿ç®—ç¬¦é‡è½½
 ostream& operator<<(ostream& os, const HighPrecision& other)
 {
-	// Èç¹ûÓĞ·ûºÅ£¬ÏÈÊä³ö·ûºÅ
+	// å¦‚æœæœ‰ç¬¦å·ï¼Œå…ˆè¾“å‡ºç¬¦å·
 	if (other.flag) os << '-';
-	// ·´ÏòÊä³ö
+	// åå‘è¾“å‡º
 	for (int* p = other.data + other.length - 1; p >= other.data; p--) {
 		os << *p;
 	}
 	return os;
 }
 
-// ÊäÈëÔËËã·ûÖØÔØ
+// è¾“å…¥è¿ç®—ç¬¦é‡è½½
 istream& operator>>(istream& os, HighPrecision& other)
 {
 	other.get(os);
