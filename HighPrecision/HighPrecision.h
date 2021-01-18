@@ -24,6 +24,10 @@ public:
 	HighPrecision();
 	// 传入数据位数
 	HighPrecision(int);
+	// 拷贝构造函数（对于需要深拷贝的对象必须要有！！！）
+	// 当函数返回局部对象的时候，会自动调用此函数进行拷贝副本
+	// 如果没有，将会自动拷贝地址，而不是地址指向的数据(浅拷贝)
+	HighPrecision(const HighPrecision&);
 	// 传入常量初始化
 	//static HighPrecision constNum(const int);
 
@@ -34,10 +38,13 @@ public:
 	// 反转数据
 	void reverse();
 	// 输出数据
-	void display(ostream& os);
+	void display();
 	// 扩容数据
 	int resize(int size);
 
+	// 赋值运算符（对于需要深拷贝的对象必须要有！！！）
+	// 当变量赋值时自动调用，进行深拷贝！！！
+	HighPrecision& operator=(const HighPrecision& other);
 
 	// 加法，传入另一个加数
 	HighPrecision operator+(const HighPrecision& other) const;

@@ -13,10 +13,7 @@ int main(void) {
 	cout << a << "\n" << b << endl;
 	HighPrecision c = a + b;
 	cout << c << endl;
-	//cout << a + b << endl;
-	//cout << a + HighPrecision::constNum(111) << endl;
-	//cout << a + 111 << endl;
-	//cout << 111 + a << endl;
+	cout << a + b << endl;
 
 	return 0;
 }

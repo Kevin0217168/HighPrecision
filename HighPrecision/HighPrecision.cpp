@@ -18,7 +18,20 @@ HighPrecision::HighPrecision(int size)
 
 HighPrecision::~HighPrecision()
 {
+	cout << "awsl" << endl;
 	delete[] this->data;
+}
+
+HighPrecision::HighPrecision(const HighPrecision& other)
+{
+	cout << "aaa" << endl;
+	delete[] this->data;
+	this->data = new int[other.length];
+	memcpy(this->data, other.data, sizeof(int) * other.length);
+
+	this->length = other.length;
+	this->size = other.size;
+	this->flag = other.flag;
 }
 
 int countNum(int n)
@@ -111,14 +124,28 @@ void HighPrecision::reverse()
 }
 
 // 输出
-void HighPrecision::display(ostream& os)
+void HighPrecision::display()
 {
 	// 如果有符号，先输出符号
-	if (this->flag) os << '-';
+	if (this->flag) cout << '-';
 	// 反向输出
 	for (int* p = this->data + this->length - 1; p >= this->data; p--) {
-		os << *p;
+		cout << *p;
 	}
+}
+
+HighPrecision& HighPrecision::operator=(const HighPrecision& other)
+{
+	if (this == &other) return *this;
+	cout << "haha" << endl;
+	delete[] this->data;
+	this->data = new int[other.length];
+	memcpy(this->data, other.data, sizeof(int) * other.length);
+
+	this->length = other.length;
+	this->size = other.size;
+	this->flag = other.flag;
+	return *this;
 }
 
 // 加法
@@ -168,16 +195,17 @@ HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 		// 较小数已加完，只加较大数
 		else {
 			result.data[i] = A->data[i] + carry;
-		}
-		// 当最小数加完后可能出现进位，单位最大9， 加上进位最多10
-		if (i == B->length) {
-			if (result.data[i] > 9) {
-				result.data[i] = 0;
+			// 当最小数加完后可能出现进位，单位最大9， 加上进位最多10
+			if (i == B->length) {
+				if (result.data[i] > 9) {
+					result.data[i] = 0;
+				}
+				else {
+					carry = 0;
+				}
 			}
-			else {
-				carry = 0;
-			}
 		}
+		
 	}
 	// 将进位加到最高位，此处最高位只能是0或1
 	result.data[A->length] = carry;
