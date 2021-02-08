@@ -4,6 +4,18 @@
 
 using namespace std;
 
+/*==================================================================
+* 高精度计算库
+* 内存全部动态分配
+* 包含加减运算、赋值运算、比较运算和输入输出
+* 目前支持的：+、-、=、==、<、>、<=、>=、<<、>>
+*
+* TODO: 乘除运算、自增自减、计算赋值符
+*
+* auther: Kevin0217168
+* Time: 2021.2.8
+* Website: https://github.com/Kevin0217168/HighPrecision
+===================================================================*/
 class HighPrecision
 {
 private:
@@ -21,6 +33,11 @@ private:
 	int length = 0;
 
 public:
+	const int getsize() const { return this->size; }
+	const int getlength() const { return this->length; }
+	const bool getflag() const { return this->flag; }
+	const int* getdata() const { return this->data; }
+
 	/*------------------实现在 hp_basic.cpp 中---------------------*/
 
 	// 默认构造函数

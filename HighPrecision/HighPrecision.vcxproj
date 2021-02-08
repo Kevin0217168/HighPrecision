@@ -159,7 +159,6 @@
     <ClCompile Include="hp_compare.cpp" />
     <ClCompile Include="hp_sub.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\15838\Desktop\test\catch.hpp" />
