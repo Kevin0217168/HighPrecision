@@ -19,7 +19,7 @@ HighPrecision HighPrecision::operator-(const HighPrecision& other) const
 		// 将负数改为正数
 		temp.flag = false;
 		// 绝对值相加
-		HighPrecision result = *this + temp;
+		HighPrecision result = temp + other;
 		// 最后结果为负数
 		result.flag = true;
 		return result;

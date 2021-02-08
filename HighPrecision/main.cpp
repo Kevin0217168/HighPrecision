@@ -48,10 +48,10 @@ TEST_CASE("sub", "[sub][in text]") {
 TEST_CASE("radom test add and sub", "[sub][in text]") {
 	long long int min = -10000;
 	long long int max = 10000;
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 10; i++) {
 		long long int a = radomInt(min, max);
 		long long int b = radomInt(min, max);
-		if (1) {
+		if (radomInt(0, 1)) {
 			INFO("加法");
 			// cout << a << " + " << b << endl;
 			INFO(a);
