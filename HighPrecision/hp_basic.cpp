@@ -90,7 +90,7 @@ void HighPrecision::get(istream& os)
 	int* p = this->data;
 	this->length = 0;
 
-	// 判断符号
+	// 判断符号、忽略无用符号（仅在开头判断）
 	while (1) {
 		*p = os.get();
 		if (*p == '-') {
@@ -206,7 +206,7 @@ const HighPrecision& HighPrecision::absMax(const HighPrecision& A, const HighPre
 }
 
 // 比较数据，返回较大数的引用
-HighPrecision HighPrecision::compare(HighPrecision& A, HighPrecision& B)
+HighPrecision HighPrecision::maxAbs(HighPrecision& A, HighPrecision& B)
 {
 	return HighPrecision();
 }

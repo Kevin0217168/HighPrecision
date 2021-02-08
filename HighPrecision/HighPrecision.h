@@ -50,7 +50,7 @@ public:
 	int resize(int size);
 
 	// 比较数据的绝对值，返回绝对值较大数的引用
-	HighPrecision compare(HighPrecision& A, HighPrecision& B);
+	HighPrecision maxAbs(HighPrecision& A, HighPrecision& B);
 	// 比较数据，返回较大数的引用
 	const HighPrecision& absMax(const HighPrecision& A, const HighPrecision& B) const;
 
@@ -82,10 +82,18 @@ public:
 	HighPrecision operator-(const HighPrecision& other) const;
 
 	/*------------------实现在 hp_compare.cpp 中---------------------*/
+	// 比较两数大小，小1等0大2
+	int compare(const HighPrecision&, const HighPrecision&) const;
 	// 高精度等于高精度
 	bool operator==(const HighPrecision& other) const;
-	// 高精度小于等于高精度
+	// 小于等于
 	bool operator<=(const HighPrecision& other) const;
+	// 大于等于
+	bool operator>=(const HighPrecision& other) const;
+	// 小于
+	bool operator<(const HighPrecision& other) const;
+	// 大于
+	bool operator>(const HighPrecision& other) const;
 
 private:
 
