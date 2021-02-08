@@ -5,7 +5,7 @@ using namespace std;
 
 bool HighPrecision::operator==(const HighPrecision& other) const
 {
-	if (this->flag && other.flag) {
+	if (this->flag == other.flag) {
 		if (this->length == other.length) {
 			for (int i = this->length - 1; i >= 0; i--) {
 				if (other.data[i] != other.data[i]) {

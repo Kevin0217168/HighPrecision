@@ -18,18 +18,25 @@ int countNum(int n)
 	return tmp;
 }
 
-HighPrecision::HighPrecision(int num)
+HighPrecision::HighPrecision(long long int num)
 {
 	// 数一数数据有几位
 	int count = countNum(num);
 	// 设置一个相同大小的空间
 	this->resize(count);
-	// 将数据的每一位填入
-	int n = 0;
-	for (int i = num; i; i /= 10) {
-		this->data[n] = i % 10;
-		n++;
+
+	if (num == 0) {
+		this->data[0] = 0;
 	}
+	else {
+		// 将数据的每一位填入
+		int n = 0;
+		for (int i = num; i; i /= 10) {
+			this->data[n] = abs(i % 10);
+			n++;
+		}
+	}
+
 	this->length = count;
 	if (num < 0) this->flag = true;
 	else this->flag = false;
@@ -84,20 +91,27 @@ void HighPrecision::get(istream& os)
 	this->length = 0;
 
 	// 判断符号
-	*p = os.get();
-	if (*p == '-') {
-		// 如果是负号，符号位置为真
-		this->flag = true;
-	}
-	else {
-		this->flag = false;
-		// 如果是数据，转换为数字
-		*p -= '0';
-		p++;
-		this->length++;
+	while (1) {
+		*p = os.get();
+		if (*p == '-') {
+			// 如果是负号，符号位置为真
+			this->flag = true;
+			break;
+		}
+		else if (*p == '\n' || *p == '\0' || *p == EOF || *p == ' ') {
+			continue;
+		}
+		else {
+			this->flag = false;
+			// 如果是数据，转换为数字
+			*p -= '0';
+			p++;
+			this->length++;
+			break;
+		}
 	}
 
-	// TODO 未判断数据<=1的情况
+
 	while (1) {
 		// 读入数据
 		while (this->length < this->size) {

@@ -10,9 +10,17 @@ HighPrecision HighPrecision::operator+(const HighPrecision& other) const
 
 	// 是否异号
 	// 加上一个负数等于减去正数
-	//if (this->flag == false && other.flag == true) return *this - other;
+	if (this->flag == false && other.flag == true) {
+		HighPrecision temp = other;
+		temp.flag = false;
+		return *this - temp;
+	}
 	// 相反
-	//else if (this->flag == true && other.flag == false) return other - *this;
+	else if (this->flag == true && other.flag == false) {
+		HighPrecision temp = *this;
+		temp.flag = false;
+		return other - temp;
+	}
 
 	// 将长度较长的作为A
 	const HighPrecision* A, * B;

@@ -9,17 +9,17 @@ HighPrecision HighPrecision::operator-(const HighPrecision& other) const
 	// 判断符号（加法情况）
 	// 一正一负，等于正加正
 	if (this->flag == false && other.flag == true) {
-		HighPrecision A = *this;
-		A.flag = false;
-		return *this + other;
+		HighPrecision temp = other;
+		temp.flag = false;
+		return *this + temp;
 	}
 	// 一负一正，等于绝对值相加后相反数
 	else if (this->flag == true && other.flag == false) {
-		HighPrecision B = other;
+		HighPrecision temp = *this;
 		// 将负数改为正数
-		B.flag = false;
+		temp.flag = false;
 		// 绝对值相加
-		HighPrecision result = *this + B;
+		HighPrecision result = *this + temp;
 		// 最后结果为负数
 		result.flag = true;
 		return result;
@@ -63,5 +63,7 @@ HighPrecision HighPrecision::operator-(const HighPrecision& other) const
 			return result;
 		}
 	}
+	result.length = 1;
+	result.flag = false;
 	return result;
 }

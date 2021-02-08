@@ -35,7 +35,7 @@ public:
 	HighPrecision& operator=(const HighPrecision& other);
 
 	// 类型转换函数，将int转为高精度
-	HighPrecision(int);
+	HighPrecision(long long int);
 
 	// 析构函数，释放空间
 	~HighPrecision();
