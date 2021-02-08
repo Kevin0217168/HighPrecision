@@ -49,11 +49,6 @@ public:
 	// 扩容数据
 	int resize(int size);
 
-	// 比较数据的绝对值，返回绝对值较大数的引用
-	HighPrecision maxAbs(HighPrecision& A, HighPrecision& B);
-	// 比较数据，返回较大数的引用
-	const HighPrecision& absMax(const HighPrecision& A, const HighPrecision& B) const;
-
 	// 输入
 	friend istream& operator>>(istream& os, HighPrecision& other);
 	// 输出
@@ -61,7 +56,6 @@ public:
 
 	// 转换为int类型
 	operator int() {
-		cout << "调用我啦" << endl;
 		int sum = 0;
 		for (int i = this->length - 1; i >= 0; i--) {
 			sum += this->data[i] * pow(10, (this->length - i - 1));
@@ -82,9 +76,14 @@ public:
 	HighPrecision operator-(const HighPrecision& other) const;
 
 	/*------------------实现在 hp_compare.cpp 中---------------------*/
+
+	// 比较数据的绝对值，返回绝对值较大数的引用
+	const HighPrecision& absMax(const HighPrecision& A, const HighPrecision& B) const;
+
 	// 比较两数大小，小1等0大2
 	int compare(const HighPrecision&, const HighPrecision&) const;
-	// 高精度等于高精度
+
+	// 等于
 	bool operator==(const HighPrecision& other) const;
 	// 小于等于
 	bool operator<=(const HighPrecision& other) const;

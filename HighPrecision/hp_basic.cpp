@@ -183,34 +183,6 @@ int HighPrecision::resize(int size)
 	return 0;
 }
 
-// 比较数据的绝对值，返回绝对值较大数的引用
-const HighPrecision& HighPrecision::absMax(const HighPrecision& A, const HighPrecision& B) const
-{
-	if (A.length > B.length) {
-		return A;
-	}
-	else if (B.length > A.length) {
-		return B;
-	}
-	else {
-		for (int i = A.length - 1; i >= 0; i--) {
-			if (A.data[i] > B.data[i]) {
-				return A;
-			}
-			else if (A.data[i] < B.data[i]) {
-				return B;
-			}
-		}
-	}
-	return A;
-}
-
-// 比较数据，返回较大数的引用
-HighPrecision HighPrecision::maxAbs(HighPrecision& A, HighPrecision& B)
-{
-	return HighPrecision();
-}
-
 // 输出运算符重载
 ostream& operator<<(ostream& os, const HighPrecision& other)
 {

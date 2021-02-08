@@ -3,6 +3,28 @@
 
 using namespace std;
 
+// 比较数据的绝对值，返回绝对值较大数的引用
+const HighPrecision& HighPrecision::absMax(const HighPrecision& A, const HighPrecision& B) const
+{
+	if (A.length > B.length) {
+		return A;
+	}
+	else if (B.length > A.length) {
+		return B;
+	}
+	else {
+		for (int i = A.length - 1; i >= 0; i--) {
+			if (A.data[i] > B.data[i]) {
+				return A;
+			}
+			else if (A.data[i] < B.data[i]) {
+				return B;
+			}
+		}
+	}
+	return A;
+}
+
 int HighPrecision::compare(const HighPrecision& a, const HighPrecision& b) const {
 	// 两数是否同号
 	if (a.flag == b.flag) {
